@@ -6,59 +6,52 @@ from dateutil import parser as dateparser
 from email.utils import format_datetime
 from datetime import datetime, timezone
 import hashlib
-import os
+import os, sys
 
-BASE_URL = "https://cdsco.gov.in"
-TARGET = "https://cdsco.gov.in/opencms/opencms/en/Committees/SEC/"
-OUTPUT = "sec-rss.xml"
-CHANNEL_TITLE = "CDSCO - SEC (auto)"
+TARGET = "https://cdscoonline.gov.in/CDSCO/cdscoDrugs"
+OUTPUT = "cdsco-drugs-rss.xml"
+CHANNEL_TITLE = "CDSCO - cdscoDrugs (auto)"
 CHANNEL_LINK = TARGET
-CHANNEL_DESC = "Automated RSS for CDSCO SEC page (generated)."
+CHANNEL_DESC = "Automated RSS for CDSCO cdscoDrugs page (generated)."
+
+HEADERS = {
+    "User-Agent": "rss-bot/1.0 (+https://github.com/)"
+}
 
 def fetch_page(url):
-    r = requests.get(url, timeout=30)
+    r = requests.get(url, headers=HEADERS, timeout=30)
     r.raise_for_status()
     return r.text
 
-def parse_items(html):
+def find_links(html):
     soup = BeautifulSoup(html, "lxml")
-    items = []
-
-    # Strategy: find links to committee PDFs / pages. The site lists items in tables / lists.
-    # We'll extract <a> tags under the main content area that link to PDFs or to details.
     main = soup.find(id="content") or soup
     anchors = main.find_all("a", href=True)
 
+    items = []
     seen = set()
     for a in anchors:
         href = a["href"].strip()
         if href.startswith("javascript:") or href.startswith("#"):
             continue
-        # turn relative urls into absolute
+        # normalize link
         if href.startswith("/"):
-            link = BASE_URL + href
-        elif href.startswith("http"):
+            link = "https://cdscoonline.gov.in" + href
+        elif href.lower().startswith("http"):
             link = href
         else:
-            link = BASE_URL + "/" + href
+            link = TARGET.rstrip("/") + "/" + href.lstrip("/")
 
-        text = a.get_text(strip=True) or link
-        # Filter probable article/pdf links (you can expand these rules)
-        if any(x in link.lower() for x in ["/resources/","uploadcommitteefiles","recommendations","uploadcdscoweb","pdf",".pdf","CommitteeFiles","NewsDetails","Minutes"]) or text.lower().startswith("minutes") or len(text) > 6:
-            uid = hashlib.sha1(link.encode()).hexdigest()
-            if uid in seen:
+        title = a.get_text(" ", strip=True) or link
+        # basic filter: PDFs, downloads, or descriptive links
+        if any(x in link.lower() for x in [".pdf", "/uploads/", "download", "viewfile", "uploads"]) or len(title) > 6:
+            if link in seen:
                 continue
-            seen.add(uid)
-            item = {
-                "title": text,
-                "link": link,
-                "guid": link,
-                "pubDate": None,
-                "description": ""
-            }
-            # try to get nearby date text (simple heuristic)
-            parent_text = a.parent.get_text(" ", strip=True)
-            # try parse any date-like substring
+            seen.add(link)
+            item = {"title": title, "link": link, "guid": link, "description": ""}
+            # try to find a nearby date text (parent/next sibling)
+            parent_text = a.parent.get_text(" ", strip=True) if a.parent else ""
+            # attempt to parse any date-like substring
             for token in parent_text.split():
                 try:
                     dt = dateparser.parse(token, fuzzy=False)
@@ -67,9 +60,10 @@ def parse_items(html):
                 except Exception:
                     continue
             items.append(item)
+
     return items
 
-def build_rss(items):
+def build_rss(items, raw_snapshot_hash):
     now = datetime.now(timezone.utc)
     header = f'''<?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
@@ -81,18 +75,30 @@ def build_rss(items):
     <language>en-IN</language>
 '''
     body = ""
-    for it in items:
-        pub = it["pubDate"]
-        if not pub:
-            pub = now
-        elif not pub.tzinfo:
-            pub = pub.replace(tzinfo=timezone.utc)
-        pubstr = format_datetime(pub)
-        title = escape_xml(it["title"])
-        link = it["link"]
-        guid = it["guid"]
-        desc = escape_xml(it["description"])
+
+    # if we found no link-like items, include a snapshot entry so readers see when page changed
+    if not items:
+        snapshot_title = f"Snapshot update — page changed ({now.strftime('%Y-%m-%d %H:%M:%S %Z')})"
         body += f"""    <item>
+      <title>{escape_xml(snapshot_title)}</title>
+      <link>{CHANNEL_LINK}</link>
+      <description>Page snapshot changed; content hash: {raw_snapshot_hash}</description>
+      <pubDate>{format_datetime(now)}</pubDate>
+      <guid isPermaLink="false">{raw_snapshot_hash}</guid>
+    </item>\n"""
+    else:
+        for it in items:
+            pub = it.get("pubDate")
+            if not pub:
+                pub = now
+            elif not pub.tzinfo:
+                pub = pub.replace(tzinfo=timezone.utc)
+            pubstr = format_datetime(pub)
+            title = escape_xml(it["title"])
+            link = it["link"]
+            guid = it["guid"]
+            desc = escape_xml(it.get("description",""))
+            body += f"""    <item>
       <title>{title}</title>
       <link>{link}</link>
       <description>{desc}</description>
@@ -112,21 +118,16 @@ def escape_xml(s):
 
 def main():
     html = fetch_page(TARGET)
-    items = parse_items(html)
+    # compute snapshot hash (useful if page is JS-driven; hash will change when content changes)
+    raw_hash = hashlib.sha1(html.encode("utf-8")).hexdigest()
 
-    # de-duplicate by link and keep order
-    seen = set()
-    dedup = []
-    for it in items:
-        if it["link"] in seen:
-            continue
-        seen.add(it["link"])
-        dedup.append(it)
-    rss = build_rss(dedup)
+    items = find_links(html)
+    rss = build_rss(items, raw_hash)
 
+    # Write output
     with open(OUTPUT, "w", encoding="utf-8") as f:
         f.write(rss)
-    print(f"Wrote {OUTPUT} with {len(dedup)} items.")
+    print(f"Wrote {OUTPUT} with {len(items)} items. snapshot_hash={raw_hash}")
 
 if __name__ == "__main__":
     main()
