@@ -2,7 +2,7 @@ name: Build and publish CDSCO drugs RSS
 
 on:
   schedule:
-    - cron: '*/10 * * * *'   # every 10 minutes
+    - cron: '*/10 * * * *'  # every 10 minutes
   workflow_dispatch:
 
 jobs:
@@ -27,15 +27,11 @@ jobs:
       - name: Generate RSS
         run: |
           python generate_rss.py
+          
+      - name: Commit and push if changed
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if git status --porcelain | grep cdssc || true; then
-            git add cdsc* || true
-          fi
-          if git status --porcelain | grep "cdsco-drugs-rss.xml"; then
-            git add cdsco-drugs-rss.xml
-            git commit -m "Update cdsco-drugs-rss.xml (automated)" || echo "No commit"
-            git push
-          else
-            echo "No changes to cdsco-drugs-rss.xml"
-          fi
+          git add -A
+          git diff --staged --quiet || git commit -m "Update cdsco-drugs-rss.xml (automated)" || echo "No changes to commit"
+          git push || echo "Nothing to push"
