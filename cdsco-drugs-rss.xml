@@ -4,14 +4,14 @@
     <title>CDSCO - cdscoDrugs (auto)</title>
     <link>https://cdscoonline.gov.in/CDSCO/cdscoDrugs</link>
     <description>Automated RSS for CDSCO cdscoDrugs page (generated).</description>
-    <lastBuildDate>Fri, 05 Dec 2025 07:43:02 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 05 Dec 2025 07:57:46 +0000</lastBuildDate>
     <language>en-IN</language>
     <item>
       <title>RSS Feed Update Failed</title>
       <link>https://cdscoonline.gov.in/CDSCO/cdscoDrugs</link>
-      <description>Unable to fetch updates from CDSCO website. Error: HTTPSConnectionPool(host=&apos;cdscoonline.gov.in&apos;, port=443): Max retries exceeded with url: /CDSCO/cdscoDrugs (Caused by NewConnectionError(&apos;&lt;urllib3.connection.HTTPSConnection object at 0x7f48ebff5bd0&gt;: Failed to establish a new connection: [Errno 101] Network is unreachable&apos;))</description>
-      <pubDate>Fri, 05 Dec 2025 07:43:02 +0000</pubDate>
-      <guid isPermaLink="false">error-20251205074302</guid>
+      <description>Unable to fetch updates from CDSCO website. Error: HTTPSConnectionPool(host=&apos;cdscoonline.gov.in&apos;, port=443): Max retries exceeded with url: /CDSCO/cdscoDrugs (Caused by NewConnectionError(&apos;&lt;urllib3.connection.HTTPSConnection object at 0x7ff325069ed0&gt;: Failed to establish a new connection: [Errno 101] Network is unreachable&apos;))</description>
+      <pubDate>Fri, 05 Dec 2025 07:57:46 +0000</pubDate>
+      <guid isPermaLink="false">error-20251205075746</guid>
     </item>
   </channel>
 </rss>
