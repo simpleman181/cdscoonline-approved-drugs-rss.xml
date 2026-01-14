@@ -4,14 +4,14 @@
     <title>CDSCO - cdscoDrugs (auto)</title>
     <link>https://cdscoonline.gov.in/CDSCO/cdscoDrugs</link>
     <description>Automated RSS for CDSCO cdscoDrugs page (generated).</description>
-    <lastBuildDate>Wed, 14 Jan 2026 23:07:55 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 14 Jan 2026 23:29:02 +0000</lastBuildDate>
     <language>en-IN</language>
     <item>
       <title>RSS Feed Update Failed</title>
       <link>https://cdscoonline.gov.in/CDSCO/cdscoDrugs</link>
       <description>Unable to fetch updates from CDSCO website. Error: HTTPSConnectionPool(host=&apos;cdscoonline.gov.in&apos;, port=443): Max retries exceeded with url: /CDSCO/cdscoDrugs (Caused by NewConnectionError(&quot;HTTPSConnection(host=&apos;cdscoonline.gov.in&apos;, port=443): Failed to establish a new connection: [Errno 101] Network is unreachable&quot;))</description>
-      <pubDate>Wed, 14 Jan 2026 23:07:55 +0000</pubDate>
-      <guid isPermaLink="false">error-20260114230755</guid>
+      <pubDate>Wed, 14 Jan 2026 23:29:02 +0000</pubDate>
+      <guid isPermaLink="false">error-20260114232902</guid>
     </item>
   </channel>
 </rss>
