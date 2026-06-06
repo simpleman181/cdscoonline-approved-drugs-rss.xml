@@ -4,14 +4,35 @@
     <title>CDSCO - cdscoDrugs (auto)</title>
     <link>https://cdscoonline.gov.in/CDSCO/cdscoDrugs</link>
     <description>Automated RSS for CDSCO cdscoDrugs page (generated).</description>
-    <lastBuildDate>Sat, 06 Jun 2026 10:30:31 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 06 Jun 2026 11:48:34 +0000</lastBuildDate>
     <language>en-IN</language>
     <item>
-      <title>RSS Feed Update Failed</title>
-      <link>https://cdscoonline.gov.in/CDSCO/cdscoDrugs</link>
-      <description>Unable to fetch updates from CDSCO website. Error: HTTPSConnectionPool(host=&apos;cdscoonline.gov.in&apos;, port=443): Max retries exceeded with url: /CDSCO/cdscoDrugs (Caused by NewConnectionError(&quot;HTTPSConnection(host=&apos;cdscoonline.gov.in&apos;, port=443): Failed to establish a new connection: [Errno 101] Network is unreachable&quot;))</description>
-      <pubDate>Sat, 06 Jun 2026 10:30:31 +0000</pubDate>
-      <guid isPermaLink="false">error-20260606103031</guid>
+      <title>Downloads</title>
+      <link>https://cdscoonline.gov.in/CDSCO/Downloads</link>
+      <description></description>
+      <pubDate>Sat, 06 Jun 2026 11:48:34 +0000</pubDate>
+      <guid isPermaLink="true">https://cdscoonline.gov.in/CDSCO/Downloads</guid>
+    </item>
+    <item>
+      <title>Contact Us</title>
+      <link>https://cdscoonline.gov.in/CDSCO/ContactUs</link>
+      <description></description>
+      <pubDate>Sat, 06 Jun 2026 11:48:34 +0000</pubDate>
+      <guid isPermaLink="true">https://cdscoonline.gov.in/CDSCO/ContactUs</guid>
+    </item>
+    <item>
+      <title>Video Tutorial</title>
+      <link>https://cdscoonline.gov.in/CDSCO/Help_Video</link>
+      <description></description>
+      <pubDate>Sat, 06 Jun 2026 11:48:34 +0000</pubDate>
+      <guid isPermaLink="true">https://cdscoonline.gov.in/CDSCO/Help_Video</guid>
+    </item>
+    <item>
+      <title>iConnect</title>
+      <link>http://iconnect.cdscoonline.gov.in/iConnect/</link>
+      <description></description>
+      <pubDate>Sat, 06 Jun 2026 11:48:34 +0000</pubDate>
+      <guid isPermaLink="true">http://iconnect.cdscoonline.gov.in/iConnect/</guid>
     </item>
   </channel>
 </rss>
