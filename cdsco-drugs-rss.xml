@@ -4,14 +4,14 @@
     <title>CDSCO - cdscoDrugs (auto)</title>
     <link>https://cdscoonline.gov.in/CDSCO/cdscoDrugs</link>
     <description>Automated RSS for CDSCO cdscoDrugs page (generated).</description>
-    <lastBuildDate>Mon, 23 Nov 2026 10:51:51 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Nov 2026 22:26:28 +0000</lastBuildDate>
     <language>en-IN</language>
     <item>
       <title>RSS Feed Update Failed</title>
       <link>https://cdscoonline.gov.in/CDSCO/cdscoDrugs</link>
-      <description>Unable to fetch updates from CDSCO website. Error: HTTPSConnectionPool(host=&apos;cdscoonline.gov.in&apos;, port=443): Max retries exceeded with url: /CDSCO/cdscoDrugs (Caused by ConnectTimeoutError(&lt;HTTPSConnection(host=&apos;cdscoonline.gov.in&apos;, port=443) at 0x7f2825b07a10&gt;, &apos;Connection to cdscoonline.gov.in timed out. (connect timeout=120)&apos;))</description>
-      <pubDate>Mon, 23 Nov 2026 10:51:51 +0000</pubDate>
-      <guid isPermaLink="false">error-20261123105151</guid>
+      <description>Unable to fetch updates from CDSCO website. Error: HTTPSConnectionPool(host=&apos;cdscoonline.gov.in&apos;, port=443): Max retries exceeded with url: /CDSCO/cdscoDrugs (Caused by ConnectTimeoutError(&lt;HTTPSConnection(host=&apos;cdscoonline.gov.in&apos;, port=443) at 0x76cce54c7bd0&gt;, &apos;Connection to cdscoonline.gov.in timed out. (connect timeout=120)&apos;))</description>
+      <pubDate>Mon, 23 Nov 2026 22:26:28 +0000</pubDate>
+      <guid isPermaLink="false">error-20261123222628</guid>
     </item>
   </channel>
 </rss>
